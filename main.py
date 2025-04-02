@@ -1,6 +1,6 @@
-from PPstats import PSStatistics
+from PPstats import PlayerStats
 
 if __name__ == "__main__":
-    filename = "playstation_players.csv"
-    stats = PSStatistics("playstation_players.csv")
-    stats.plot_pie_chart()
+    file_name = "playstation_players.csv"  
+    stats = PlayerStats(file_name)
+    stats.plot_country_distribution()

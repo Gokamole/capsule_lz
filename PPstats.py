@@ -1,25 +1,21 @@
+# Импорт бибилиотек
 import pandas as pd
 import matplotlib.pyplot as plt
-
-class PSStatistics:
-    def init(self, filename):
-        self.filename = filename
-        self.df = None
-    
-    def load_data(self):
+from log import log
+# Класс
+class PlayerStats:
+    @log
+    def __init__(self, file_name):
+        self.file_name = file_name
+        self.df = pd.read_csv(file_name)
         
-        self.df = pd.read_csv(self.filename)
-    
-    def plot_pie_chart(self):
-       
-        if self.df is None:
-            raise ValueError("Данные не загружены.")
+    def plot_country_distribution(self):
+        # Группируем данные по странам и считаем количество игроков в каждой стране
+        country_counts = self.df['country'].value_counts()
         
-        # Группировка данных по 'Account Name' и суммирование расходов
-        expense_data = self.df.groupby('country')['Amount'].sum()
-        
-        plt.figure(figsize=(7, 7))
-        expense_data.plot(kind='pie', autopct='%1.1f%%', startangle=140)
-        plt.title("Распределение игроков PlayStation по странам")
-        plt.ylabel("")
+        # Круговая диаграмма
+        plt.figure(figsize=(8, 8))
+        plt.pie(country_counts, labels=country_counts.index, autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
+        plt.title('Количество игроков PS')
+        plt.axis('equal')  
         plt.show()
